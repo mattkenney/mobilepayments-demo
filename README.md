@@ -6,7 +6,7 @@ Copyright © 2016 Beanstream Internet Commerce, Inc.
 
 # Client
 
-THe iOS client project was built with XCode 7 and requires Swift 2.3.
+The iOS client project was built with XCode 7 and requires Swift 2.3.
 
 # Server
 
