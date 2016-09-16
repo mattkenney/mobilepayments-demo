@@ -1,13 +1,21 @@
 <img src="http://www.beanstream.com/wp-content/uploads/2015/08/Beanstream-logo.png" />
 
-# Mobile (ApplePay &amp; AndroidPay) Payments Demo Merchant Server
+# Mobile (ApplePay &amp; AndroidPay) Payments Demo Merchant Clients & Server
 
 Copyright © 2016 Beanstream Internet Commerce, Inc.
 
-This project requires Python 3.
+# Client
 
-For local dev you can also use a SQLite DB by just setting the follow env var and omitting all other env vars
-listed below. DATABASE_URL=sqlite:////tmp/mobilepay-demo.db
+THe iOS client project was built with XCode 7 and requires Swift 2.3.
+
+# Server
+
+The server project requires Python 3.
+
+For local dev you can also use a SQLite DB by just setting (or omitting) the following default env var.
+```bash
+DATABASE_URL=sqlite:////tmp/mobilepay-demo.db
+```
 
 ## Server Setup & Installation
 
