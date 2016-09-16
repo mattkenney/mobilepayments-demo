@@ -22,7 +22,7 @@ DATABASE_URL=sqlite:////tmp/mobilepay-demo.db
 * Execute a git clone command on this repo and in a terminal cd into the root project directory.
 ```bash
 $ git clone https://github.com/beanstream/mobilepay-demo.git
-$ cd mobilepay-demo/server
+$ cd mobilepay-demo/server/server-app
 ```
 * Install virtualenv
 ```bash
