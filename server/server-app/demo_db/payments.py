@@ -99,6 +99,7 @@ class PaymentsDAO:
     logger = None
 
     def __init__(self):
+        session = None
         try:
             self.logger = logging.getLogger('mobilepay.demo')
 
@@ -115,6 +116,7 @@ class PaymentsDAO:
                 session.close()
 
     def create_payment(self, payment_amount, payment_method):
+        session = None
         try:
             payment_amount = Numeric(payment_amount)
 
@@ -146,6 +148,7 @@ class PaymentsDAO:
                 session.close()
 
     def update_payment(self, payment_id, bic_transaction_id, payment_status):
+        session = None
         try:
             session = DBSession()
 
