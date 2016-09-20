@@ -109,7 +109,7 @@ extension ViewController: PKPaymentAuthorizationViewControllerDelegate {
         // Automatically validates status code within 200...299 range, and that the Content-Type header
         // of the response matches the Accept header of the request, if one is provided.
         //
-        Alamofire.request("http://10.240.9.64:8080/process-payment", method: .get, parameters: parameters)
+        Alamofire.request("http://10.240.9.64:8080/process-payment", method: .post, parameters: parameters)
             .validate()
             .responseJSON { response in
                 
