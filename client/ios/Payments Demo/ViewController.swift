@@ -65,13 +65,13 @@ class ViewController: UIViewController {
         request.currencyCode = "CAD" // "USD"
         
         request.paymentSummaryItems = [
-            PKPaymentSummaryItem(label: "1 Golden Egg", amount: NSDecimalNumber(value: 1.00 as Double), type: .final),
-            PKPaymentSummaryItem(label: "Shipping", amount: NSDecimalNumber(value: 0.05 as Double), type: .final),
-            PKPaymentSummaryItem(label: "GST Tax", amount: NSDecimalNumber(value: 0.07 as Double), type: .final),
-            PKPaymentSummaryItem(label: "Total", amount: NSDecimalNumber(value: 1.12 as Double), type: .final)
+            PKPaymentSummaryItem(label: "1 Golden Egg", amount: NSDecimalNumber(string: "1.00"), type: .final),
+            PKPaymentSummaryItem(label: "Shipping", amount: NSDecimalNumber(string: "0.05"), type: .final),
+            PKPaymentSummaryItem(label: "GST Tax", amount: NSDecimalNumber(string: "0.07"), type: .final),
+            PKPaymentSummaryItem(label: "Total", amount: NSDecimalNumber(string: "1.12"), type: .final)
         ]
         
-        self.paymentAmount = NSDecimalNumber(value: 1.12 as Double)
+        self.paymentAmount = NSDecimalNumber(string: "1.12")
         
         let authVC = PKPaymentAuthorizationViewController(paymentRequest: request)
         authVC.delegate = self
@@ -83,8 +83,6 @@ extension ViewController: PKPaymentAuthorizationViewControllerDelegate {
     
     // Executes a process payment request on our Merchant Server
     func paymentAuthorizationViewController(_ controller: PKPaymentAuthorizationViewController, didAuthorizePayment payment: PKPayment, completion: @escaping (PKPaymentAuthorizationStatus) -> Void) {
-        print(payment.token)
-        
         // Get payment data from the token and base64 encode it
         let token = payment.token
         let paymentData = token.paymentData
@@ -101,6 +99,8 @@ extension ViewController: PKPaymentAuthorizationViewControllerDelegate {
                 "apple-pay-merchant-id": ApplePayMerchantID
             ]
         ] as [String : Any]
+
+        print("payment parameters: \(parameters)")
         
         let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
 
