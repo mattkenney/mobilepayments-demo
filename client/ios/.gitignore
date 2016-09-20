@@ -35,7 +35,6 @@ xcshareddata
 *.log
 *~.nib
 *.xccheckout
-info.plist
 
 Pods/
 
