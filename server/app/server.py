@@ -18,20 +18,34 @@
 # SOFTWARE.
 #
 
+import os
 import logging
 import requests
+import newrelic.agent
 from flask import Flask
 from flask import request
 from flask import jsonify
 from werkzeug.exceptions import default_exceptions
 from werkzeug.exceptions import HTTPException
-from demo_db import payments
+from db import payments
+
+# New Relic OS level environment variables:
+# environment should be one of
+# --> development | test | staging | production
+
+environment = os.environ.get('NEW_RELIC_ENVIRONMENT')
+new_relic_license = os.environ.get('NEW_RELIC_LICENSE_KEY')
+
+if environment is None or new_relic_license is None:
+    print("New Relic Monitoring not enabled!")
+else:
+    newrelic.agent.initialize('config/newrelic.ini')
 
 # Create the Server app
 app = Flask(__name__)
 
 # Setup a logger
-logger = logging.getLogger('mobilepay.demo')
+logger = logging.getLogger('server.demo')
 
 
 ##########################

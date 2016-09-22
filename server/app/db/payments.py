@@ -29,6 +29,7 @@ from sqlalchemy import Integer
 from sqlalchemy import Numeric
 from sqlalchemy import Text
 from sqlalchemy import DateTime
+from sqlalchemy import Enum
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
 
@@ -61,8 +62,8 @@ class Payment(Base):
     id = Column(Integer, primary_key=True)
     bic_transaction_id = Column(Text, unique=True, nullable=True)
     payment_amount = Column(Numeric, nullable=False)
-    payment_method = Column(PaymentMethod, nullable=False)
-    payment_status = Column(PaymentStatus, nullable=False)
+    payment_method = Column(Enum(PaymentMethod), nullable=False)
+    payment_status = Column(Enum(PaymentStatus), nullable=False)
     created_date = Column(DateTime, default=datetime.datetime.utcnow)
     updated_date = Column(DateTime, onupdate=datetime.datetime.utcnow)
 
