@@ -13,12 +13,14 @@ import MBProgressHUD
 
 class ViewController: UIViewController {
     
-    
     @IBOutlet weak var purchaseTypeSegmentedControl: UISegmentedControl!
     @IBOutlet weak var placeholderView: UIView!
     
+    // Mobile Pay Demo Server
+    fileprivate let DemoServerURLBase = "http://<your_demo_server_url>"
+    
     // Apple Pay Merchant Identifier
-    fileprivate let ApplePayMerchantID = "merchant.com.beanstream.apbeanstream"
+    fileprivate let ApplePayMerchantID = "merchant.com.mycompany.app"
     
     // Beanstream Supported Payment Networks for Apple Pay
     fileprivate let SupportedPaymentNetworks = [PKPaymentNetwork.visa, PKPaymentNetwork.masterCard, PKPaymentNetwork.amex]
@@ -105,7 +107,7 @@ extension ViewController: PKPaymentAuthorizationViewControllerDelegate {
         
         self.hud = MBProgressHUD.showAdded(to: self.view, animated: true)
 
-        Alamofire.request("http://10.240.9.64:8080/process-payment/apple-pay", method: .post, parameters: parameters, encoding: URLEncoding.httpBody).responseJSON {
+        Alamofire.request(DemoServerURLBase + "/process-payment/apple-pay", method: .post, parameters: parameters, encoding: URLEncoding.httpBody).responseJSON {
             response in
 
             if let _ = self.hud {

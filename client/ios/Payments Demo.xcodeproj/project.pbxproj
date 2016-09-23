@@ -20,7 +20,7 @@
 /* Begin PBXFileReference section */
 		1A8AFB67DA594C27D98C246A /* Pods_Payments_Demo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Payments_Demo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7964F4DFB1B0779802A03CC2 /* Pods-Payments Demo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Payments Demo.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Payments Demo/Pods-Payments Demo.debug.xcconfig"; sourceTree = "<group>"; };
-		BC1D61211D8A046C00F4350B /* Payments Demo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Payments Demo.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		BC1D61211D8A046C00F4350B /* Mobile Pay.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Mobile Pay.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		BC1D61241D8A046C00F4350B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		BC1D61261D8A046C00F4350B /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		BC1D61291D8A046C00F4350B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -76,7 +76,7 @@
 		BC1D61221D8A046C00F4350B /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				BC1D61211D8A046C00F4350B /* Payments Demo.app */,
+				BC1D61211D8A046C00F4350B /* Mobile Pay.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -101,9 +101,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		BC1D61201D8A046C00F4350B /* Payments Demo */ = {
+		BC1D61201D8A046C00F4350B /* Mobile Pay */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = BC1D61331D8A046C00F4350B /* Build configuration list for PBXNativeTarget "Payments Demo" */;
+			buildConfigurationList = BC1D61331D8A046C00F4350B /* Build configuration list for PBXNativeTarget "Mobile Pay" */;
 			buildPhases = (
 				9EE3179C30D1D8D39974F986 /* [CP] Check Pods Manifest.lock */,
 				BC1D611D1D8A046C00F4350B /* Sources */,
@@ -116,9 +116,9 @@
 			);
 			dependencies = (
 			);
-			name = "Payments Demo";
+			name = "Mobile Pay";
 			productName = "Payments Demo";
-			productReference = BC1D61211D8A046C00F4350B /* Payments Demo.app */;
+			productReference = BC1D61211D8A046C00F4350B /* Mobile Pay.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -159,7 +159,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				BC1D61201D8A046C00F4350B /* Payments Demo */,
+				BC1D61201D8A046C00F4350B /* Mobile Pay */,
 			);
 		};
 /* End PBXProject section */
@@ -358,7 +358,7 @@
 				CODE_SIGN_ENTITLEMENTS = "Payments Demo/Payments Demo.entitlements";
 				INFOPLIST_FILE = "Payments Demo/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.beanstream.Payments-Demo";
+				PRODUCT_BUNDLE_IDENTIFIER = com.beanstream.mobilepay;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "Payments Demo/Payments Demo-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
@@ -374,7 +374,7 @@
 				CODE_SIGN_ENTITLEMENTS = "Payments Demo/Payments Demo.entitlements";
 				INFOPLIST_FILE = "Payments Demo/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.beanstream.Payments-Demo";
+				PRODUCT_BUNDLE_IDENTIFIER = com.beanstream.mobilepay;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "Payments Demo/Payments Demo-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
@@ -393,7 +393,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		BC1D61331D8A046C00F4350B /* Build configuration list for PBXNativeTarget "Payments Demo" */ = {
+		BC1D61331D8A046C00F4350B /* Build configuration list for PBXNativeTarget "Mobile Pay" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				BC1D61341D8A046C00F4350B /* Debug */,
