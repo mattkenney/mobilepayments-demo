@@ -1,4 +1,4 @@
-# nginx-gunicorn-flask
+# mobilepay-demo
 
 FROM alpine:3.4
 
@@ -23,8 +23,8 @@ RUN apk add --no-cache --update python3 \
   && pip3 install -r /deploy/app/requirements.txt \
   && apk del \
     build-base python3-dev \
-  && rm -rf /var/cache/apk/* \
-  && apk add logrotate
+  && apk add logrotate \
+  && rm -rf /var/cache/apk/*
 
 # Setup nginx
 RUN mkdir -p /run/nginx \

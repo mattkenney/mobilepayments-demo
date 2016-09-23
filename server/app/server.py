@@ -94,6 +94,11 @@ for code in default_exceptions.items():
 ##########################
 # ROUTES
 
+@app.route('/version')
+def version():
+    return '1.0.0'
+
+
 @app.route('/process-payment/<wallet_type>', methods=['POST'])
 def process_payment(wallet_type):
     if wallet_type != 'apple-pay':
