@@ -62,8 +62,17 @@ class Payment(Base):
     id = Column(Integer, primary_key=True)
     bic_transaction_id = Column(Text, unique=True, nullable=True)
     payment_amount = Column(Numeric, nullable=False)
-    payment_method = Column(Enum(PaymentMethod), nullable=False)
-    payment_status = Column(Enum(PaymentStatus), nullable=False)
+    payment_method = Column(Enum(PaymentMethod.visa.value,
+                                 PaymentMethod.mastercard.value,
+                                 PaymentMethod.amex.value,
+                                 PaymentMethod.discover.value,
+                                 PaymentMethod.apple_pay.value,
+                                 PaymentMethod.android_pay.value,
+                                 PaymentMethod.samsung_pay.value), nullable=False)
+    payment_status = Column(Enum(PaymentStatus.new.value,
+                                 PaymentStatus.authorized.value,
+                                 PaymentStatus.captured.value,
+                                 PaymentStatus.voided.value), nullable=False)
     created_date = Column(DateTime, default=datetime.datetime.utcnow)
     updated_date = Column(DateTime, onupdate=datetime.datetime.utcnow)
 
@@ -87,8 +96,8 @@ try:
 
     # Create all tables in the engine. This is equivalent to "Create Table" statements in raw SQL.
     Base.metadata.create_all(engine)
-except Exception as startup_e:
-    print("fatal error", startup_e, file=sys.stderr)
+except Exception as e:
+    print("Payment DB fatal error!", e, file=sys.stderr)
 
 
 ################
@@ -119,11 +128,9 @@ class PaymentsDAO:
     def create_payment(self, payment_amount, payment_method):
         session = None
         try:
-            payment_amount = Numeric(payment_amount)
-
             payment = Payment(payment_amount=payment_amount,
-                              payment_method=payment_method,
-                              payment_status=PaymentStatus.new)
+                              payment_method=payment_method.value,
+                              payment_status=PaymentStatus.new.value)
 
             session = DBSession()
             session.add(payment)
@@ -137,8 +144,8 @@ class PaymentsDAO:
             extra = {
                 'DatabaseException': 'Unexpected error in create_payment.',
                 'Exception Detail': 'Unable to insert Payment with" +'
-                                    ' payment_amount: ' + payment_amount +
-                                    ' payment_method: ' + payment_method
+                                    ' payment_amount: ' + str(payment_amount) +
+                                    ' payment_method: ' + payment_method.value
             }
 
             self.logger.error(e, extra=extra)
