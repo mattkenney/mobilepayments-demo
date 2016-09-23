@@ -19,6 +19,8 @@
 #
 
 import os
+import base64
+import json
 import logging
 import requests
 import newrelic.agent
@@ -29,8 +31,22 @@ from werkzeug.exceptions import default_exceptions
 from werkzeug.exceptions import HTTPException
 from db import payments
 
-# New Relic OS level environment variables:
-# environment should be one of
+# Beanstream API Server base URL. Defaults to 'https://www.beanstream.com/api'
+bic_server_url_base = os.environ.get('BIC_SERVER_URL_BASE')
+
+if bic_server_url_base is None:
+    bic_server_url_base = 'https://www.beanstream.com/api'
+
+# Beanstream params needed for authentication include Merchant ID & API Passcode.
+# --> More info here: http://developer.beanstream.com/documentation/authentication/
+bic_merchant_id = os.environ.get('BIC_MERCHANT_ID')
+bic_api_passcode = os.environ.get('BIC_API_PASSCODE')
+
+if bic_merchant_id is None or bic_api_passcode is None:
+    print("FATAL: Required Server Params Missing!!!")
+
+# If New Relic support is needed use the following environment variables.
+# Environment should be one of
 # --> development | test | staging | production
 
 environment = os.environ.get('NEW_RELIC_ENVIRONMENT')
@@ -45,7 +61,7 @@ else:
 app = Flask(__name__)
 
 # Setup a logger
-logger = logging.getLogger('server.demo')
+logger = logging.getLogger('ApplePay-Demo')
 
 
 ##########################
@@ -78,26 +94,27 @@ for code in default_exceptions.items():
 ##########################
 # ROUTES
 
-@app.route('/process-payment', methods=['POST'])
-def process_payment():
-    # Ensure that POST params were all passed in OK.
-    payment_method = request.form.get('payment-method')
+@app.route('/process-payment/<wallet_type>', methods=['POST'])
+def process_payment(wallet_type):
+    if wallet_type != 'apple-pay':
+        return error400('Must use an Apple Pay wallet type.')
 
-    if payment_method != 'apple-pay':
-        return error400('Apple Pay payment method is required.')
+    if bic_merchant_id is None or bic_api_passcode is None:
+        return error400('Required Server Params Missing.')
+
+    print(request.form)
 
     amount = request.form.get('amount')
     transaction_type = request.form.get('transaction-type')
-    apple_wallet = request.form.get('apple-wallet')
-    ap_merchant_id = apple_wallet.get('apple-pay-merchant-id')
-    ap_token = apple_wallet.get('payment-token')
+    ap_merchant_id = request.form.get('apple-wallet[apple-pay-merchant-id]')
+    ap_token = request.form.get('apple-wallet[payment-token]')
 
     if transaction_type != "purchase" and transaction_type != "pre-auth":
         transaction_type = None
 
+    # Ensure that POST params were all passed in OK.
     if amount is None \
             or transaction_type is None \
-            or apple_wallet is None \
             or ap_merchant_id is None \
             or ap_token is None:
 
@@ -109,33 +126,63 @@ def process_payment():
         payment_method=payments.PaymentMethod.apple_pay
     )
 
+    payment_id = payment_dict["id"]
+
     # Call on Beanstream process the payment.
     payload = {
-        'amount': amount,
+        'amount': float(amount),
         'payment_method': 'apple_pay',
-        "apple_pay": {
-            "apple_merchant_id": ap_merchant_id,
-            "payment_token": ap_token
+        'apple_pay': {
+            'apple_pay_merchant_id': ap_merchant_id,
+            'payment_token': ap_token
         }
     }
+
+    print(payload)
 
     if transaction_type == 'pre-auth':
         payload['complete'] = False
 
-    response = requests.post('https://www.beanstream.com/api/v1/payments', data=payload)
-    response = response.json()
+    passcode = bic_merchant_id + ':' + bic_api_passcode
+    passcode = base64.b64encode(passcode.encode('utf-8')).decode()
 
-    bic_transaction_id = response.get('id')
+    headers = {
+        'Authorization': 'Passcode ' + passcode,
+        'Content-Type': 'application/json'
+    }
 
-    # Update the payment record to include the Beanstream Transaction ID
-    # and a status to indicate payment was captured.
-    response = payments_dao.update_payment(
-        payment_id=payment_dict.get('id'),
-        bic_transaction_id=bic_transaction_id,
-        payment_status=payments.PaymentStatus.captured
-    )
+    response = requests.post(bic_server_url_base + '/v1/payments',
+                             json=payload,
+                             headers=headers)
 
-    return response.json()
+    json_response = {'success': False}
+
+    if response.status_code == 200:
+        response = response.json()
+
+        bic_transaction_id = response.get('id')
+
+        if bic_transaction_id is not None:
+            # Update the payment record to include the Beanstream Transaction ID
+            # and a status to indicate payment was captured.
+            json_response = payments_dao.update_payment(
+                payment_id=payment_id,
+                bic_transaction_id=bic_transaction_id,
+                payment_status=payments.PaymentStatus.captured
+            )
+    else:
+        message = response.text
+        logger.warn('Payments API call unsuccessful: ' + response.text)
+
+        try:
+            json_dict = json.loads(message)
+            message = json_dict.get('message')
+        except json.JSONDecodeError:
+            pass
+
+        return error400(message)
+
+    return jsonify(json_response)
 
 
 # HELPER FUNCTIONS
