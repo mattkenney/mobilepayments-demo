@@ -15,7 +15,6 @@
 		BC1D61381D8A06E100F4350B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BC1D61371D8A06E100F4350B /* Assets.xcassets */; };
 		BC1D613C1D8A156300F4350B /* InventoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC1D613B1D8A156300F4350B /* InventoryViewController.swift */; };
 		BC1D613E1D8A174E00F4350B /* InventoryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC1D613D1D8A174E00F4350B /* InventoryTableViewCell.swift */; };
-		BC1D61401D8A1A8200F4350B /* PassKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BC1D613F1D8A1A8200F4350B /* PassKit.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -31,7 +30,6 @@
 		BC1D61371D8A06E100F4350B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		BC1D613B1D8A156300F4350B /* InventoryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InventoryViewController.swift; sourceTree = "<group>"; };
 		BC1D613D1D8A174E00F4350B /* InventoryTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InventoryTableViewCell.swift; sourceTree = "<group>"; };
-		BC1D613F1D8A1A8200F4350B /* PassKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PassKit.framework; path = System/Library/Frameworks/PassKit.framework; sourceTree = SDKROOT; };
 		BC1D61411D8B3A9000F4350B /* Payments Demo-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Payments Demo-Bridging-Header.h"; sourceTree = "<group>"; };
 		C19BD54BA9F98E847112CC89 /* Pods-Payments Demo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Payments Demo.release.xcconfig"; path = "Pods/Target Support Files/Pods-Payments Demo/Pods-Payments Demo.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -41,7 +39,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BC1D61401D8A1A8200F4350B /* PassKit.framework in Frameworks */,
 				28D2708DF03D21E082AD40FB /* Pods_Payments_Demo.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -61,7 +58,6 @@
 		96BC1A571B501905B4B68785 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				BC1D613F1D8A1A8200F4350B /* PassKit.framework */,
 				1A8AFB67DA594C27D98C246A /* Pods_Payments_Demo.framework */,
 			);
 			name = Frameworks;
@@ -142,6 +138,9 @@
 						SystemCapabilities = {
 							com.apple.OMC = {
 								enabled = 1;
+							};
+							com.apple.Wallet = {
+								enabled = 0;
 							};
 						};
 					};
