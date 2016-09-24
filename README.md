@@ -4,9 +4,17 @@
 
 Copyright © 2016 Beanstream Internet Commerce, Inc.
 
+This repo contains a demo iOS client and a simplistic merchant server. The idea is that an iOS client will request that a payment be made using Apple Pay and that, if successful, then a resulting Apple Pay token will be transmitted to a merchant's server usually along with other info such as a customer identifier along with detailed sales/inventory data along with related shipping & billing addresses. This would generally be recorded on the merchants CRM, as an example, and then a request to process the payment using the Apple Pay token will be made to the Beanstream RESTful Payments API. Upon success or failure to process the payment, the merchants CRM would usually then be updated and then the end client receives a result.
+
+Again this is a simpistic approach. A real system may be much more complex and, for example, may include a more sophsiticated message queue based infrastructure to help with high volume transaction processing.
+
 # Client
 
-The iOS client project was built with XCode 7 and requires Swift 2.3.
+The iOS client project was built with XCode 8 and requires Swift 3.0.
+
+For details on how to develop Apple Pay enabled apps please visit:
+- https://developer.apple.com/library/content/ApplePay_Guide/index.html#//apple_ref/doc/uid/TP40014764-CH1-SW1
+
 
 # Server
 

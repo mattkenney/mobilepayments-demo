@@ -25,6 +25,8 @@ class ViewController: UIViewController {
     
     fileprivate var paymentButton: PKPaymentButton!
     fileprivate var paymentAmount: NSDecimalNumber!
+    fileprivate var alert: UIAlertController!
+    fileprivate var hud: MBProgressHUD!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -65,13 +67,13 @@ class ViewController: UIViewController {
         request.currencyCode = "CAD" // "USD"
         
         request.paymentSummaryItems = [
-            PKPaymentSummaryItem(label: "1 Golden Egg", amount: NSDecimalNumber(value: 1.00 as Double), type: .final),
-            PKPaymentSummaryItem(label: "Shipping", amount: NSDecimalNumber(value: 0.05 as Double), type: .final),
-            PKPaymentSummaryItem(label: "GST Tax", amount: NSDecimalNumber(value: 0.07 as Double), type: .final),
-            PKPaymentSummaryItem(label: "Total", amount: NSDecimalNumber(value: 1.12 as Double), type: .final)
+            PKPaymentSummaryItem(label: "1 Golden Egg", amount: NSDecimalNumber(string: "1.00"), type: .final),
+            PKPaymentSummaryItem(label: "Shipping", amount: NSDecimalNumber(string: "0.05"), type: .final),
+            PKPaymentSummaryItem(label: "GST Tax", amount: NSDecimalNumber(string: "0.07"), type: .final),
+            PKPaymentSummaryItem(label: "Total", amount: NSDecimalNumber(string: "1.12"), type: .final)
         ]
         
-        self.paymentAmount = NSDecimalNumber(value: 1.12 as Double)
+        self.paymentAmount = NSDecimalNumber(string: "1.12")
         
         let authVC = PKPaymentAuthorizationViewController(paymentRequest: request)
         authVC.delegate = self
@@ -83,8 +85,6 @@ extension ViewController: PKPaymentAuthorizationViewControllerDelegate {
     
     // Executes a process payment request on our Merchant Server
     func paymentAuthorizationViewController(_ controller: PKPaymentAuthorizationViewController, didAuthorizePayment payment: PKPayment, completion: @escaping (PKPaymentAuthorizationStatus) -> Void) {
-        print(payment.token)
-        
         // Get payment data from the token and base64 encode it
         let token = payment.token
         let paymentData = token.paymentData
@@ -95,51 +95,70 @@ extension ViewController: PKPaymentAuthorizationViewControllerDelegate {
         let parameters = [
             "amount": self.paymentAmount,
             "transaction-type": transactionType,
-            "payment-method": "apple-pay",
             "apple-wallet": [
                 "payment-token": b64TokenStr,
                 "apple-pay-merchant-id": ApplePayMerchantID
             ]
         ] as [String : Any]
+
+        print("payment parameters: \(parameters)")
         
-        let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
+        self.hud = MBProgressHUD.showAdded(to: self.view, animated: true)
 
-        //
-        // validate(): 
-        // Automatically validates status code within 200...299 range, and that the Content-Type header
-        // of the response matches the Accept header of the request, if one is provided.
-        //
-        Alamofire.request("http://10.240.9.64:8080/process-payment", method: .get, parameters: parameters)
-            .validate()
-            .responseJSON { response in
-                
-                var status = "Payment was not processed"
+        Alamofire.request("http://10.240.9.64:8080/process-payment/apple-pay", method: .post, parameters: parameters, encoding: URLEncoding.httpBody).responseJSON {
+            response in
 
-                switch response.result {
-                case .success:
-                    print(response.data)     // server data
-                    print(response.result)   // result of response serialization
-                    
-                    if let JSON = response.result.value {
-                        print("JSON: \(JSON)")
-                    }
-                    
-                    status = "Payment processed successfully"
-                    completion(.success)
-                    
-                case .failure(let error):
-                    print("process transaction request error: \(error)")
-                    completion(.failure)
+            if let _ = self.hud {
+                self.hud.hide(animated: true)
+            }
+
+            var successFlag = false
+            var status = "Payment was not processed"
+            var json: NSDictionary! = nil
+
+            if let result = response.result.value {
+                json = result as! NSDictionary
+                print("JSON: \(json)")
+            }
+
+            let statusCode = response.response?.statusCode
+                        
+            if statusCode == 200 {
+                successFlag = true
+                status = "Payment processed successfully"
+            }
+            else {
+                print("process transaction request error: \(statusCode)")
+                if let message = json["message"] as! String? {
+                    status = message
                 }
-                
-                hud.hide(animated: true)
-                
-                let alert = UIAlertController.init(title: "Mobile Pay Demo", message: status, preferredStyle: .alert)
-                self.present(alert, animated: true, completion: nil)
+            }
+            
+            self.alert = UIAlertController.init(title: "Mobile Pay Demo", message: status, preferredStyle: .alert)
+            let okAction = UIAlertAction(title: "OK", style: .default, handler: { (alert: UIAlertAction) in
+                self.dismiss(animated: true, completion: nil)
+            })
+            self.alert.addAction(okAction)
+            
+            if successFlag {
+                completion(.success)
+            }
+            else {
+                completion(.failure)
+            }
         }
     }
     
     func paymentAuthorizationViewControllerDidFinish(_ controller: PKPaymentAuthorizationViewController) {
         controller.dismiss(animated: true, completion: nil)
+        
+        if let _ = self.hud {
+            self.hud.hide(animated: true)
+        }
+
+        if let _ = self.alert {
+            self.present(alert, animated: true, completion: nil)
+            self.alert = nil
+        }
     }
 }
