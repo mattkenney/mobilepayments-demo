@@ -49,14 +49,17 @@ class ViewController: UIViewController {
     
     func paymentButtonAction() {
         // Check to make sure payments are supported.
-        /*
-        if !PKPaymentAuthorizationViewController.canMakePaymentsUsingNetworks(supportedNetworks) {
-            // Let user know they can not continue with an Apple Pay based transaction... 
-            // Offer a Beanstream PayForm option instead!!! ;-)
-            print("Apple Pay not available!")
+        if !PKPaymentAuthorizationViewController.canMakePayments(usingNetworks: SupportedPaymentNetworks, capabilities: .capability3DS) {
+            // Let user know they can not continue with an Apple Pay based transaction...
+            let message = "Apple Pay not avialable on this device with the required card types!"
+            let alert = UIAlertController.init(title: "Mobile Pay Demo", message: message, preferredStyle: .alert)
+            let okAction = UIAlertAction(title: "OK", style: .default, handler: { (alert: UIAlertAction) in
+                self.dismiss(animated: true, completion: nil)
+            })
+            alert.addAction(okAction)
+            self.present(alert, animated: true, completion: nil)
             return
         }
-         */
         
         let request = PKPaymentRequest()
         
@@ -131,8 +134,11 @@ extension ViewController: PKPaymentAuthorizationViewControllerDelegate {
             }
             else {
                 print("process transaction request error: \(statusCode)")
-                if let message = json["message"] as! String? {
+                if let _ = json, let message = json["message"] as! String? {
                     status = message
+                }
+                else if response.result.isFailure {
+                    status = response.result.debugDescription
                 }
             }
             
