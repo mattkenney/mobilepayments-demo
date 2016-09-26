@@ -111,15 +111,15 @@ class PaymentsDAO:
     def __init__(self):
         session = None
         try:
-            self.logger = logging.getLogger('mobilepay.demo')
+            self.logger = logging.getLogger('ApplePay-Demo')
 
             # test being able to create a DB session at start up
             session = DBSession()
 
-        except NameError as e:
+        except NameError as e2:
             print("Error: PaymentsDAO could not create DBSession!!", file=sys.stderr)
             if self.logger is not None:
-                self.logger.exception(e)
+                self.logger.exception(e2)
 
         finally:
             if session is not None:
@@ -136,9 +136,11 @@ class PaymentsDAO:
             session.add(payment)
             session.commit()
 
+            self.logger.debug("Created initial payment record. id: " + str(payment.id))
+
             return {'success': True, 'id': payment.id}
 
-        except Exception as e:
+        except Exception as e2:
             session.rollback()
 
             extra = {
@@ -148,7 +150,7 @@ class PaymentsDAO:
                                     ' payment_method: ' + payment_method.value
             }
 
-            self.logger.error(e, extra=extra)
+            self.logger.error(e2, extra=extra)
             raise e
 
         finally:
@@ -166,23 +168,27 @@ class PaymentsDAO:
                 return {'success': False, 'message': 'Payment record not found.'}
 
             payment.bic_transaction_id = bic_transaction_id
-            payment.payment_status = payment_status
+            payment.payment_status = payment_status.value
             session.commit()
+
+            self.logger.debug("Updated payment record. id: " + str(payment.id) +
+                              " with BIC MID: " + bic_transaction_id +
+                              " and payment status: " + payment_status.value)
 
             return {'success': True}
 
-        except Exception as e:
+        except Exception as e2:
             session.rollback()
 
             extra = {
                 'DatabaseException': 'Unexpected error in update_payment.',
                 'Exception Detail': 'Unable to update Payment with" +'
-                                    ' payment_id: ' + payment_id +
+                                    ' payment_id: ' + str(payment_id) +
                                     ' bic_transaction_id: ' + bic_transaction_id +
-                                    ' payment_status: ' + payment_status
+                                    ' payment_status: ' + payment_status.value
             }
 
-            self.logger.error(e, extra=extra)
+            self.logger.error(e2, extra=extra)
             raise e
 
         finally:

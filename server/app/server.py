@@ -19,8 +19,9 @@
 #
 
 import os
-import base64
+import sys
 import json
+import base64
 import logging
 import requests
 import newrelic.agent
@@ -62,7 +63,13 @@ app = Flask(__name__)
 
 # Setup a logger
 logger = logging.getLogger('ApplePay-Demo')
+logger.setLevel(logging.DEBUG)
 
+ch = logging.StreamHandler(sys.stdout)
+ch.setLevel(logging.DEBUG)
+formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+ch.setFormatter(formatter)
+logger.addHandler(ch)
 
 ##########################
 # ERROR/EXCEPTION HANDLING
@@ -96,7 +103,7 @@ for code in default_exceptions.items():
 
 @app.route('/version')
 def version():
-    return '1.0.0'
+    return '1.0.1'
 
 
 @app.route('/process-payment/<wallet_type>', methods=['POST'])
@@ -107,7 +114,7 @@ def process_payment(wallet_type):
     if bic_merchant_id is None or bic_api_passcode is None:
         return error400('Required Server Params Missing.')
 
-    print(request.form)
+    logger.debug(request.form)
 
     amount = request.form.get('amount')
     transaction_type = request.form.get('transaction-type')
@@ -212,4 +219,4 @@ def error500(e):
 payments_dao = payments.PaymentsDAO()
 
 if __name__ == '__main__':
-    app.run(host='localhost', port=8080)
+    app.run(host='0.0.0.0', port=8080)
