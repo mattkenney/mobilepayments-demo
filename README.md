@@ -51,12 +51,14 @@ $ source venv/bin/activate
 ```bash
 (venv) app$ export DATABASE_URL=sqlite:////tmp/mobilepay-demo.db  # Defaults to this and can be ommitted
 (venv) app$ export BIC_API_PASSCODE=<your_beanstream_passcode>
+(venv) app$ export BIC_MERCHANT_ID=<your_beanstream_merchant_id>
 (venv) app$ python server.py
 ```
 
 Or if on Windows follow the same as above except set your environment variables via PowerShell as follows.
 ```
 (venv) app$ $env:BIC_API_PASSCODE = "<your_beanstream_passcode>"
+(venv) app$ $env:BIC_MERCHANT_ID = "<your_beanstream_merchant_id>"
 (venv) app$ $env:DATABASE_URL = "sqlite:////users/<your_user>/appdata/local/temp/mobilepay-demo.db"
 ```
 
