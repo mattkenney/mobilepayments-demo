@@ -103,7 +103,7 @@ for code in default_exceptions.items():
 
 @app.route('/version')
 def version():
-    return '1.0.1'
+    return '1.0.2'
 
 
 @app.route('/process-payment/<wallet_type>', methods=['POST'])
@@ -139,6 +139,10 @@ def process_payment(wallet_type):
     )
 
     payment_id = payment_dict["id"]
+    complete = True
+
+    if transaction_type == 'pre-auth':
+        complete = False
 
     # Call on Beanstream process the payment.
     payload = {
@@ -146,14 +150,12 @@ def process_payment(wallet_type):
         'payment_method': 'apple_pay',
         'apple_pay': {
             'apple_pay_merchant_id': ap_merchant_id,
-            'payment_token': ap_token
+            'payment_token': ap_token,
+            'complete': complete
         }
     }
 
     print(payload)
-
-    if transaction_type == 'pre-auth':
-        payload['complete'] = False
 
     passcode = bic_merchant_id + ':' + bic_api_passcode
     passcode = base64.b64encode(passcode.encode('utf-8')).decode()
