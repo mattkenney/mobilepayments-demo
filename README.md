@@ -4,7 +4,7 @@
 
 Copyright © 2016 Beanstream Internet Commerce, Inc.
 
-<img width="83" height="53" align="right" src="http://images.apple.com/v/apple-pay/f/images/overview/apple_pay_logo_large.png">
+<img width="83" height="53" align="right" src="http://images.apple.com/v/apple-pay/f/images/overview/apple_pay_logo_large_2x.png">
 
 This repo contains an iOS client to demonstrate Apple Pay along with a simple merchant Python/Flask server to help process the payment.
 
