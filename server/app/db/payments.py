@@ -49,6 +49,8 @@ class PaymentStatus(enum.Enum):
     authorized = "authorized"
     captured = "captured"
     voided = "voided"
+    declined = "declined"
+    error = "error"
 
 
 ##########################
@@ -72,7 +74,9 @@ class Payment(Base):
     payment_status = Column(Enum(PaymentStatus.new.value,
                                  PaymentStatus.authorized.value,
                                  PaymentStatus.captured.value,
-                                 PaymentStatus.voided.value), nullable=False)
+                                 PaymentStatus.voided.value,
+                                 PaymentStatus.declined.value,
+                                 PaymentStatus.error.value), nullable=False)
     created_date = Column(DateTime, default=datetime.datetime.utcnow)
     updated_date = Column(DateTime, onupdate=datetime.datetime.utcnow)
 
@@ -151,13 +155,13 @@ class PaymentsDAO:
             }
 
             self.logger.error(e2, extra=extra)
-            raise e
+            raise e2
 
         finally:
             if session is not None:
                 session.close()
 
-    def update_payment(self, payment_id, bic_transaction_id, payment_status):
+    def update_payment(self, payment_id, payment_status, bic_transaction_id=None):
         session = None
         try:
             session = DBSession()
@@ -167,12 +171,14 @@ class PaymentsDAO:
             if payment is None:
                 return {'success': False, 'message': 'Payment record not found.'}
 
-            payment.bic_transaction_id = bic_transaction_id
+            if bic_transaction_id is not None:
+                payment.bic_transaction_id = bic_transaction_id
+
             payment.payment_status = payment_status.value
             session.commit()
 
             self.logger.debug("Updated payment record. id: " + str(payment.id) +
-                              " with BIC MID: " + bic_transaction_id +
+                              " with BIC MID: " + str(bic_transaction_id) +
                               " and payment status: " + payment_status.value)
 
             return {'success': True}
@@ -184,12 +190,12 @@ class PaymentsDAO:
                 'DatabaseException': 'Unexpected error in update_payment.',
                 'Exception Detail': 'Unable to update Payment with" +'
                                     ' payment_id: ' + str(payment_id) +
-                                    ' bic_transaction_id: ' + bic_transaction_id +
+                                    ' bic_transaction_id: ' + str(bic_transaction_id) +
                                     ' payment_status: ' + payment_status.value
             }
 
             self.logger.error(e2, extra=extra)
-            raise e
+            raise e2
 
         finally:
             if session is not None:

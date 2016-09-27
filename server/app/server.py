@@ -173,26 +173,42 @@ def process_payment(wallet_type):
 
     if response.status_code == 200:
         response = response.json()
+        logger.info(response)
 
         bic_transaction_id = response.get('id')
+        payment_status = payments.PaymentStatus.captured
 
-        if bic_transaction_id is not None:
-            # Update the payment record to include the Beanstream Transaction ID
-            # and a status to indicate payment was captured.
-            json_response = payments_dao.update_payment(
-                payment_id=payment_id,
-                bic_transaction_id=bic_transaction_id,
-                payment_status=payments.PaymentStatus.captured
-            )
+        if transaction_type == "pre-auth":
+            payment_status = payments.PaymentStatus.authorized
+
+        # Update the payment record to include the Beanstream Transaction ID
+        # and a status to indicate payment was captured or authorized.
+        json_response = payments_dao.update_payment(
+            payment_id=payment_id,
+            payment_status=payment_status,
+            bic_transaction_id = bic_transaction_id
+        )
     else:
         message = response.text
         logger.warn('Payments API call unsuccessful: ' + response.text)
 
+        payment_status = payments.PaymentStatus.error
+
         try:
             json_dict = json.loads(message)
             message = json_dict.get('message')
+
+            if message == 'Declined':
+                payment_status = payments.PaymentStatus.declined
+
         except json.JSONDecodeError:
             pass
+
+        # Update the payment record to include the new payment status
+        payments_dao.update_payment(
+            payment_id=payment_id,
+            payment_status=payment_status
+        )
 
         return error400(message)
 
