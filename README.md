@@ -8,7 +8,7 @@ Copyright © 2016 Beanstream Internet Commerce, Inc.
 
 This repo contains an iOS client to demonstrate Apple Pay along with a simple merchant Python/Flask server to help process the payment.
  
-<img width="200" align="left" src="client/ios/screenshot.png">
+<img width="190" align="left" src="client/ios/screenshot.png">
 
 The Apple Pay payment request flows from the iOS client and then, if successful, an Apple Pay token is transmitted to the demo merchant server, which records the payment request and executes the Beanstream Payments API.
 
