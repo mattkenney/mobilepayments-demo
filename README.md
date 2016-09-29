@@ -97,4 +97,6 @@ Or if on Windows follow the same as above except set your environment variables 
 * [REST API](http://developer.beanstream.com/documentation/rest-api-reference/)
 * [Payments](http://developer.beanstream.com/documentation/take-payments/purchases/card/)
 * [Apple Pay @ Beanstream](http://developer.beanstream.com/documentation/apple-pay/)
-
+* [Getting Started with Apple Pay](https://developer.apple.com/apple-pay/get-started/)
+* [Apple Pay Programming Guide](https://developer.apple.com/library/content/ApplePay_Guide/)
+* [Apple Pay Sandbox Testing](https://developer.apple.com/support/apple-pay-sandbox/)
