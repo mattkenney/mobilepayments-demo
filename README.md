@@ -1,6 +1,6 @@
 <img src="http://www.beanstream.com/wp-content/uploads/2015/08/Beanstream-logo.png" />
 
-# Payments Demo Merchant Clients & Server
+# Mobile Payments Demo Merchant Client & Server
 
 Copyright © 2016 Beanstream Internet Commerce, Inc.
 
@@ -47,8 +47,8 @@ payload = {
 
 * Execute a git clone command on this repo and in a terminal cd into the root project directory.
 ```bash
-$ git clone https://github.com/beanstream/mobilepay-demo.git
-$ cd mobilepay-demo/server/app
+$ git clone https://github.com/beanstream/mobilepayments-demo.git
+$ cd mobilepayments-demo/server/app
 ```
 
 * Install virtualenv (if not already available)
@@ -88,7 +88,7 @@ Or if on Windows follow the same as above except set your environment variables 
 
 <a name="contributing"/>
 ## Building Locally and Contributing
- * Check out repo: `$ git clone https://github.com/beanstream/mobilepay-demo.git`
+ * Check out repo: `$ git clone https://github.com/beanstream/mobilepayments-demo.git`
  * Fork the repo to commit changes to and issue Pull Requests as needed.
 
 ---
