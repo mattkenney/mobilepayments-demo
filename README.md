@@ -16,7 +16,8 @@ In your production flow, the mobile client might transmit other info such as the
  
 This repo's demo client and server are intended to be simple examples to help you with your production implementation.
 
-    ---
+\
+\
 
 # Client
 
