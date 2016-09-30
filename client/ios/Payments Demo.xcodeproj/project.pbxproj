@@ -20,13 +20,13 @@
 /* Begin PBXFileReference section */
 		1A8AFB67DA594C27D98C246A /* Pods_Payments_Demo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Payments_Demo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7964F4DFB1B0779802A03CC2 /* Pods-Payments Demo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Payments Demo.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Payments Demo/Pods-Payments Demo.debug.xcconfig"; sourceTree = "<group>"; };
+		BC1A6E3E1D9DD5DA00E1DCBE /* Mobile Pay.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Mobile Pay.entitlements"; sourceTree = "<group>"; };
 		BC1D61211D8A046C00F4350B /* Mobile Pay.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Mobile Pay.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		BC1D61241D8A046C00F4350B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		BC1D61261D8A046C00F4350B /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		BC1D61291D8A046C00F4350B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		BC1D612E1D8A046C00F4350B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		BC1D61301D8A046C00F4350B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		BC1D61361D8A049D00F4350B /* Payments Demo.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = "Payments Demo.entitlements"; sourceTree = "<group>"; };
 		BC1D61371D8A06E100F4350B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		BC1D613B1D8A156300F4350B /* InventoryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InventoryViewController.swift; sourceTree = "<group>"; };
 		BC1D613D1D8A174E00F4350B /* InventoryTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InventoryTableViewCell.swift; sourceTree = "<group>"; };
@@ -66,6 +66,7 @@
 		BC1D61181D8A046C00F4350B = {
 			isa = PBXGroup;
 			children = (
+				BC1A6E3E1D9DD5DA00E1DCBE /* Mobile Pay.entitlements */,
 				BC1D61231D8A046C00F4350B /* Payments Demo */,
 				BC1D61221D8A046C00F4350B /* Products */,
 				185CDE0D7BD97917DAB96FB7 /* Pods */,
@@ -90,7 +91,6 @@
 				BC1D613D1D8A174E00F4350B /* InventoryTableViewCell.swift */,
 				BC1D61281D8A046C00F4350B /* Main.storyboard */,
 				BC1D612D1D8A046C00F4350B /* LaunchScreen.storyboard */,
-				BC1D61361D8A049D00F4350B /* Payments Demo.entitlements */,
 				BC1D61411D8B3A9000F4350B /* Payments Demo-Bridging-Header.h */,
 				BC1D61371D8A06E100F4350B /* Assets.xcassets */,
 				BC1D61301D8A046C00F4350B /* Info.plist */,
@@ -136,6 +136,9 @@
 						DevelopmentTeam = 6GT2VUY2JR;
 						LastSwiftMigration = 0800;
 						SystemCapabilities = {
+							com.apple.ApplePay = {
+								enabled = 1;
+							};
 							com.apple.OMC = {
 								enabled = 1;
 							};
@@ -355,7 +358,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_ENTITLEMENTS = "Payments Demo/Payments Demo.entitlements";
+				CODE_SIGN_ENTITLEMENTS = "Mobile Pay.entitlements";
 				INFOPLIST_FILE = "Payments Demo/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.beanstream.mobilepay;
@@ -371,7 +374,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_ENTITLEMENTS = "Payments Demo/Payments Demo.entitlements";
+				CODE_SIGN_ENTITLEMENTS = "Mobile Pay.entitlements";
 				INFOPLIST_FILE = "Payments Demo/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.beanstream.mobilepay;
