@@ -1,18 +1,22 @@
 <img src="http://www.beanstream.com/wp-content/uploads/2015/08/Beanstream-logo.png" />
 
-# Payments Demo Merchant Clients & Server
+# Mobile Payments Demo Merchant Client & Server
 
 Copyright © 2016 Beanstream Internet Commerce, Inc.
 
 <img width="83" height="53" align="right" src="http://images.apple.com/v/apple-pay/f/images/overview/apple_pay_logo_large_2x.png">
 
 This repo contains an iOS client to demonstrate Apple Pay along with a simple merchant Python/Flask server to help process the payment.
+ 
+<img width="180" align="left" src="client/ios/screenshot.png">
 
-The Apple Pay payment request flows from the iOS client and then, if successful, a resulting Apple Pay token is transmitted to the demo merchant server  which records the payment request and executes the Beanstream Payments API.
+The Apple Pay payment request flows from the iOS client and then, if successful, an Apple Pay token is transmitted to the demo merchant server, which records the payment request and executes the Beanstream Payments API.
 
-In your production flow the mobile client might also transmit other info such as a customer identifier and detailed sales/inventory data along with related shipping & billing addresses. This would generally be recorded on a merchants CRM, as an example, and then a request to process the payment using the Apple Pay token would then be made to the Beanstream RESTful Payments API. Upon success or failure to process the payment, the merchants CRM would usually then be updated and then the originating mobile client would receive a result.
-
+In your production flow, the mobile client might transmit other info such as the customer identifier, detailed sales/inventory data, and related shipping and billing addresses. This info might be recorded on a merchants CRM (as an example), and then a request to process the payment using the Apple Pay token would then be made to the Beanstream Payments API. Upon success or failure to process the payment, the merchant’s CRM could be updated and the originating mobile client would then receive a response.
+ 
 This repo's demo client and server are intended to be simple examples to help you with your production implementation.
+
+:-)
 
 # Client
 
@@ -25,12 +29,26 @@ For details on how to develop Apple Pay enabled apps please visit:
 
 The server project requires Python 3. To build & run the server for local dev you can use a SQLite DB and try the server out by just setting your Beanstream API Passcode as a server side environment variable and then start up as follows.
 
+When the client makes a payment request, it first gets an Apple Pay payment token using standard Apple SDK APIs. It then communicates this info to the Demo Server which is responsible for interacting with the Beanstream Payments API. The Beansteam Payments API has been updated to allow for Apple Pay transactions and the following is a sample POST parameter to use with a RESTful invocation of the Payments API.
+
+```
+payload = {
+    'amount': float(<purchase_amount>),
+    'payment_method': 'apple_pay',
+    'apple_pay': {
+        'apple_pay_merchant_id': <your_apple_pay_merchant_id>,
+        'payment_token': <apple_pay_base64_encoded_token>,
+        'complete': <true (Defaults to true if omitted. Used for a purchase) | false (Used for a Pre-Auth.)>
+    }
+}
+```
+
 ## Server Setup & Installation
 
 * Execute a git clone command on this repo and in a terminal cd into the root project directory.
 ```bash
-$ git clone https://github.com/beanstream/mobilepay-demo.git
-$ cd mobilepay-demo/server/app
+$ git clone https://github.com/beanstream/mobilepayments-demo.git
+$ cd mobilepayments-demo/server/app
 ```
 
 * Install virtualenv (if not already available)
@@ -70,11 +88,15 @@ Or if on Windows follow the same as above except set your environment variables 
 
 <a name="contributing"/>
 ## Building Locally and Contributing
- * Check out repo: `$ git clone https://github.com/beanstream/mobilepay-demo.git`
+ * Check out repo: `$ git clone https://github.com/beanstream/mobilepayments-demo.git`
  * Fork the repo to commit changes to and issue Pull Requests as needed.
 
 ---
 
 # API References
-* [REST API](http://developer.beanstream.com/documentation/rest-api-reference/)
-* [Payments](http://developer.beanstream.com/documentation/take-payments/purchases/card/)
+* [Beanstream Payments](http://developer.beanstream.com/documentation/take-payments/purchases/card/)
+* [Beanstream REST API](http://developer.beanstream.com/documentation/rest-api-reference/)
+* [Apple Pay @ Beanstream](http://developer.beanstream.com/documentation/apple-pay/)
+* [Getting Started with Apple Pay](https://developer.apple.com/apple-pay/get-started/)
+* [Apple Pay Programming Guide](https://developer.apple.com/library/content/ApplePay_Guide/)
+* [Apple Pay Sandbox Testing](https://developer.apple.com/support/apple-pay-sandbox/)
