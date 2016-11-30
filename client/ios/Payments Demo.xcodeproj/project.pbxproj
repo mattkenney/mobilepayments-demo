@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		28D2708DF03D21E082AD40FB /* Pods_Payments_Demo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A8AFB67DA594C27D98C246A /* Pods_Payments_Demo.framework */; };
 		BC1D61251D8A046C00F4350B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC1D61241D8A046C00F4350B /* AppDelegate.swift */; };
 		BC1D61271D8A046C00F4350B /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC1D61261D8A046C00F4350B /* ViewController.swift */; };
 		BC1D612A1D8A046C00F4350B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BC1D61281D8A046C00F4350B /* Main.storyboard */; };
@@ -15,10 +14,12 @@
 		BC1D61381D8A06E100F4350B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BC1D61371D8A06E100F4350B /* Assets.xcassets */; };
 		BC1D613C1D8A156300F4350B /* InventoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC1D613B1D8A156300F4350B /* InventoryViewController.swift */; };
 		BC1D613E1D8A174E00F4350B /* InventoryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC1D613D1D8A174E00F4350B /* InventoryTableViewCell.swift */; };
+		C0B03CB14C83A695E9AAD9D6 /* Pods_Mobile_Pay.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DBD11CC2C9C12768BF78CB8E /* Pods_Mobile_Pay.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		1A8AFB67DA594C27D98C246A /* Pods_Payments_Demo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Payments_Demo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		55275784E32E3035CB8150B1 /* Pods-Mobile Pay.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Mobile Pay.release.xcconfig"; path = "Pods/Target Support Files/Pods-Mobile Pay/Pods-Mobile Pay.release.xcconfig"; sourceTree = "<group>"; };
 		7964F4DFB1B0779802A03CC2 /* Pods-Payments Demo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Payments Demo.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Payments Demo/Pods-Payments Demo.debug.xcconfig"; sourceTree = "<group>"; };
 		BC1A6E3E1D9DD5DA00E1DCBE /* Mobile Pay.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Mobile Pay.entitlements"; sourceTree = "<group>"; };
 		BC1D61211D8A046C00F4350B /* Mobile Pay.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Mobile Pay.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -32,6 +33,8 @@
 		BC1D613D1D8A174E00F4350B /* InventoryTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InventoryTableViewCell.swift; sourceTree = "<group>"; };
 		BC1D61411D8B3A9000F4350B /* Payments Demo-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Payments Demo-Bridging-Header.h"; sourceTree = "<group>"; };
 		C19BD54BA9F98E847112CC89 /* Pods-Payments Demo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Payments Demo.release.xcconfig"; path = "Pods/Target Support Files/Pods-Payments Demo/Pods-Payments Demo.release.xcconfig"; sourceTree = "<group>"; };
+		DBD11CC2C9C12768BF78CB8E /* Pods_Mobile_Pay.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Mobile_Pay.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		E1B699F130EFAA3E7D3C8AC9 /* Pods-Mobile Pay.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Mobile Pay.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Mobile Pay/Pods-Mobile Pay.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -39,7 +42,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				28D2708DF03D21E082AD40FB /* Pods_Payments_Demo.framework in Frameworks */,
+				C0B03CB14C83A695E9AAD9D6 /* Pods_Mobile_Pay.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -51,6 +54,8 @@
 			children = (
 				7964F4DFB1B0779802A03CC2 /* Pods-Payments Demo.debug.xcconfig */,
 				C19BD54BA9F98E847112CC89 /* Pods-Payments Demo.release.xcconfig */,
+				E1B699F130EFAA3E7D3C8AC9 /* Pods-Mobile Pay.debug.xcconfig */,
+				55275784E32E3035CB8150B1 /* Pods-Mobile Pay.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -59,6 +64,7 @@
 			isa = PBXGroup;
 			children = (
 				1A8AFB67DA594C27D98C246A /* Pods_Payments_Demo.framework */,
+				DBD11CC2C9C12768BF78CB8E /* Pods_Mobile_Pay.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -193,7 +199,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Payments Demo/Pods-Payments Demo-resources.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Mobile Pay/Pods-Mobile Pay-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		9EE3179C30D1D8D39974F986 /* [CP] Check Pods Manifest.lock */ = {
@@ -223,7 +229,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Payments Demo/Pods-Payments Demo-frameworks.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Mobile Pay/Pods-Mobile Pay-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -354,7 +360,7 @@
 		};
 		BC1D61341D8A046C00F4350B /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 7964F4DFB1B0779802A03CC2 /* Pods-Payments Demo.debug.xcconfig */;
+			baseConfigurationReference = E1B699F130EFAA3E7D3C8AC9 /* Pods-Mobile Pay.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -370,7 +376,7 @@
 		};
 		BC1D61351D8A046C00F4350B /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = C19BD54BA9F98E847112CC89 /* Pods-Payments Demo.release.xcconfig */;
+			baseConfigurationReference = 55275784E32E3035CB8150B1 /* Pods-Mobile Pay.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
